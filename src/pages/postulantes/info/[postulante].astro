@@ -2,7 +2,8 @@
 import Layout from "../../../layouts/Layout.astro";
 import HeroTitle from "../../../components/ui/HeroTitle.astro";
 import { infoDocentes } from "../../../api/infoDocentes";
-
+import PostulanteInfo from "../../../components/docentes/PostulanteInfo.astro";
+import { PostulantePDF } from "../../../components/docentes/PostulantePDF";
 export function getStaticPaths() {
   return infoDocentes.map((docente) => ({
     params: { postulante: docente.nombre.toString() },
@@ -21,5 +22,12 @@ if (!postulanteDetails) {
 ---
 
 <Layout title=`Sistema Académico ESAM | ${postulante}`>
-  <HeroTitle titulo={postulanteDetails?.nombre} />
+  
+  <section class="container">
+    <PostulanteInfo postulante={postulanteDetails}/>
+    <div class="download-pdf">
+      <PostulantePDF client:only="react" postulante={postulanteDetails} />  
+    </div>
+    
+  </section>
 </Layout>
